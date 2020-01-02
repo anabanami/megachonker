@@ -4,8 +4,9 @@ import hashlib
 
 _, in_file, out_file  = sys.argv
 
-# open file, read contents in binary, chonk it up into 1MB chunks
+
 def chonker(in_file, out_file):
+    """open file, read contents in binary, chonk it up into 1MB chunks"""
     old_hash_file = out_file + ".hashes"
     new_hash_file = out_file + ".hashes.temp"
     # check if exists else create out_file and old_hashes
