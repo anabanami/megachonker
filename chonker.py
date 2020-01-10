@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 import hashlib
@@ -5,8 +6,8 @@ import hashlib
 _, in_file, out_file  = sys.argv
 
 
-def chonker(in_file, out_file):
-    """open file, read contents in binary, chonk it up into 1MB chunks"""
+def chonker(in_file, out_file, chunk_size=10**6):
+    """open file, read contents in binary, NOMINALLY: chunk it up into 1MB chunks"""
     old_hash_file = out_file + ".hashes"
     new_hash_file = out_file + ".hashes.temp"
     # check if exists else create out_file and old_hashes
@@ -21,14 +22,14 @@ def chonker(in_file, out_file):
     # opening all them files
     with open(in_file, 'rb') as f_in:
         with open(out_file, 'r+b') as f_out:
-            with open(old_hash_file, 'rb') as g_old:
+            with open(old_hash_file, 'r+b') as g_old:
                 with open(new_hash_file, 'wb') as g_new:
                     while True:
                         digest_old = g_old.read(32)
 
                         chunk_start = f_in.tell()
                         # current chunk size is: 1 MB
-                        chunk = f_in.read(10**6)
+                        chunk = f_in.read(chunk_size)
                         # if no more in_file
                         if not chunk:
                             # ensure files are of the same size
