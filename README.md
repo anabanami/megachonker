@@ -1,9 +1,11 @@
 # chonker
 Use `chonker` for optimizing the backup of large files. 
 
+Requires the `tqdm` python package: `pip3 install tqdm`
+
 ## usage
 ```
-usage: chonker [-h] in_file out_file
+usage: chonker [-h] [-q] in_file out_file
 
 Use chonker for optimizing the backup of large files. chonker dissects large
 file objects into 1MB chunks and it hashes each chunk. Each hash is then
@@ -12,9 +14,10 @@ file. The chunk gets copied into the old file and backed up iff hashes differ.
 A file <out_file>.hashes will be stored alongside the backed up file.
 
 positional arguments:
-  in_file     This is the file to be chunked, hashed and copied
-  out_file    This is the backed up version of the file
+  in_file      This is the file to be chunked, hashed and copied
+  out_file     This is the backed up version of the file
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help   show this help message and exit
+  -q, --quiet  Do not show any output.
   ```

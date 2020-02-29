@@ -2,9 +2,9 @@
 import argparse
 import os
 import hashlib
+from tqdm import tqdm
 
-
-def chonker(in_file, out_file, chunk_size=10**6):
+def chonker(in_file, out_file, chunk_size=10**6, quiet=False):
     """open file, read contents in binary, NOMINALLY: chunk it up into 1MB chunks"""
 
     old_hash_file = out_file + ".hashes"
@@ -17,7 +17,15 @@ def chonker(in_file, out_file, chunk_size=10**6):
         with open(out_file, 'wb') as f:
             pass
 
-
+    if not quiet:
+        progress_bar = tqdm(
+            total=os.path.getsize(in_file),
+            smoothing=0,
+            unit='B',
+            unit_scale=True,
+            dynamic_ncols=True
+        )
+    
     # opening all them files
     with open(in_file, 'rb') as f_in:
         with open(out_file, 'r+b') as f_out:
@@ -44,6 +52,8 @@ def chonker(in_file, out_file, chunk_size=10**6):
                         if digest != digest_old:
                             f_out.seek(chunk_start)
                             f_out.write(chunk)
+                        if not quiet:
+                            progress_bar.update(len(chunk))
 
     os.rename(new_hash_file, old_hash_file)
 
@@ -57,8 +67,16 @@ if __name__ == '__main__':
         backed up iff hashes differ. A file <out_file>.hashes will be stored
         alongside the backed up file.""")
     
+    parser.add_argument(
+        '-q',
+        '--quiet',
+        action='store_true',
+        default=False,
+        help="Do not show any output.",
+    )
+
     parser.add_argument("in_file", help="This is the file to be chunked, hashed and copied")
     parser.add_argument("out_file", help="This is the backed up version of the file")
     args = parser.parse_args()
 
-    chonker(args.in_file, args.out_file)
+    chonker(args.in_file, args.out_file, quiet=args.quiet)
