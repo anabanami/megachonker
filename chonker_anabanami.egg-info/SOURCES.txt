@@ -1,0 +1,6 @@
+README.md
+setup.py
+chonker_anabanami.egg-info/PKG-INFO
+chonker_anabanami.egg-info/SOURCES.txt
+chonker_anabanami.egg-info/dependency_links.txt
+chonker_anabanami.egg-info/top_level.txt
