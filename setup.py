@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="chonker-anabanami", # Replace with your own username
+    name="chonker",
     version="2020.3",
     author="Ana Fabela",
     author_email="ana.fabelah@gmail.com",
@@ -19,4 +19,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    setup_requires=['setuptools', 'setuptools_scm'],
+    scripts=['chonker'],
 )
