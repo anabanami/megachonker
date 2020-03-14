@@ -3,7 +3,8 @@ Use `chonker` for optimizing the backup of large files.
 
 Requires the `tqdm` python package: `pip3 install tqdm`
 
-Install using `pip install -i https://test.pypi.org/simple/ chonker-anabanami`
+Install using 
+`pip install -i https://test.pypi.org/simple/ chonker-anabanami`
 
 ## usage
 ```
