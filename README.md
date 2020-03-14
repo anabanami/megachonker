@@ -6,8 +6,8 @@ Requires the `tqdm` python package: `pip3 install tqdm`
 Install using ```
 pip install -i https://test.pypi.org/simple/ chonker-anabanami
 ```
+
 ## usage
-```
 usage: chonker [-h] [-q] in_file out_file
 
 Use chonker for optimizing the backup of large files. chonker dissects large
