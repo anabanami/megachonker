@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: chonker
+Version: 0.1
+Summary: Use chonker for optimizing the backup of large files.
+Home-page: https://github.com/anabanami/chonker
+Author: Ana Fabela
+Author-email: ana.fabelah@gmail.com
+License: UNKNOWN
+Description: # chonker
+        Use `chonker` for optimizing the backup of large files. 
+        
+        Requires the `tqdm` python package: `pip3 install tqdm`
+        
+        Install using 
+        `pip install -i https://test.pypi.org/simple/ chonker-anabanami`
+        
+        ## usage
+        ```
+        usage: chonker [-h] [-q] in_file out_file
+        
+        Use chonker for optimizing the backup of large files. chonker dissects large
+        file objects into 1MB chunks and it hashes each chunk. Each hash is then
+        compared to a hash for the respective chunk in the previous version of the
+        file. The chunk gets copied into the old file and backed up iff hashes differ.
+        A file <out_file>.hashes will be stored alongside the backed up file.
+        
+        positional arguments:
+          in_file      This is the file to be chunked, hashed and copied
+          out_file     This is the backed up version of the file
+        
+        optional arguments:
+          -h, --help   show this help message and exit
+          -q, --quiet  Do not show any output.
+          ```
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown

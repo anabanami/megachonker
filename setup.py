@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="chonker",
-    version="2020.3",
+    version="0.1",
     author="Ana Fabela",
     author_email="ana.fabelah@gmail.com",
     description="Use chonker for optimizing the backup of large files.",
@@ -20,5 +20,6 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     setup_requires=['setuptools', 'setuptools_scm'],
+    install_requires=['tqdm'],
     scripts=['chonker'],
 )
