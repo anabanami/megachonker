@@ -1,3 +1,5 @@
 chonker_anabanami.egg-info
 build
 dist
+*.eggs
+*.egg-info
