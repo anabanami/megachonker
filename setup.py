@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="chonker",
-    version="0.1",
+    version="0.2",
     author="Ana Fabela",
     author_email="ana.fabelah@gmail.com",
     description="Use chonker for optimizing the backup of large files.",
