@@ -3,6 +3,8 @@ Use `megachonker` for optimizing the backup of large files.
 
 Requires the `tqdm` python package: `pip3 install tqdm`
 
+Installation command  `sudo pip install megachonker`
+
 ## usage
 ```
 usage: megachonker [-h] [-q] in_file out_file
