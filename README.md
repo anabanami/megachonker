@@ -1,13 +1,13 @@
-# chonker
-Use `chonker` for optimizing the backup of large files. 
+# megachonker
+Use `megachonker` for optimizing the backup of large files. 
 
 Requires the `tqdm` python package: `pip3 install tqdm`
 
 ## usage
 ```
-usage: chonker [-h] [-q] in_file out_file
+usage: megachonker [-h] [-q] in_file out_file
 
-Use chonker for optimizing the backup of large files. chonker dissects large
+Use megachonker for optimizing the backup of large files. megachonker dissects large
 file objects into 1MB chunks and it hashes each chunk. Each hash is then
 compared to a hash for the respective chunk in the previous version of the
 file. The chunk gets copied into the old file and backed up iff hashes differ.

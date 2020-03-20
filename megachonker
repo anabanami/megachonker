@@ -4,7 +4,7 @@ import os
 import hashlib
 from tqdm import tqdm
 
-def chonker(in_file, out_file, chunk_size=10**6, quiet=False):
+def megachonker(in_file, out_file, chunk_size=10**6, quiet=False):
     """open file, read contents in binary, NOMINALLY: chunk it up into 1MB chunks"""
 
     old_hash_file = out_file + ".hashes"
@@ -60,7 +60,7 @@ def chonker(in_file, out_file, chunk_size=10**6, quiet=False):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="""
-        Use chonker for optimizing the backup of large files. chonker dissects
+        Use megachonker for optimizing the backup of large files. megachonker dissects
         large file objects into 1MB chunks and it hashes each chunk. Each hash
         is then compared to a hash for the respective chunk in the previous
         version of the file.  The chunk gets copied into the old file and
@@ -79,4 +79,4 @@ if __name__ == '__main__':
     parser.add_argument("out_file", help="This is the backed up version of the file")
     args = parser.parse_args()
 
-    chonker(args.in_file, args.out_file, quiet=args.quiet)
+    megachonker(args.in_file, args.out_file, quiet=args.quiet)
