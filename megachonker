@@ -10,6 +10,9 @@ def megachonker(in_file, out_file, chunk_size=10**6, quiet=False):
     compares mtime of in_file and out_file, then open file, read contents 
     in binary, NOMINALLY: chunk it up into 1MB chunks
     """
+    if not os.path.exists(out_file):
+        with open(out_file, 'wb') as f:
+            pass
     mtime_in = os.path.getmtime(in_file)
     mtime_out = os.path.getmtime(out_file)
     if mtime_in != mtime_out:
@@ -20,9 +23,9 @@ def megachonker(in_file, out_file, chunk_size=10**6, quiet=False):
         if not os.path.exists(old_hash_file):
             with open(old_hash_file, 'wb') as f:
                 pass
-        if not os.path.exists(out_file):
-            with open(out_file, 'wb') as f:
-                pass
+        #if not os.path.exists(out_file):
+        #   with open(out_file, 'wb') as f:
+        #       pass
 
         if not quiet:
             progress_bar = tqdm(
