@@ -1,3 +1,21 @@
+#USAGE NOTES
+#
+# Make a Pypi release tarball with:
+# 
+#   python3 setup.py sdist
+# 
+# Upload to test PyPi with:
+# 
+#   twine upload --repository-url https://test.pypi.org/legacy/ dist/* 
+# 
+# Install from test Pypi with:
+#   
+#   pip install --index-url https://test.pypi.org/simple/ {name of program}
+#   
+#Upload to real PyPI with:    
+# 
+#   twine upload dist/*
+# 
 import setuptools
 
 with open("README.md", "r") as fh:
