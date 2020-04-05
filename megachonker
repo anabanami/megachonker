@@ -55,6 +55,7 @@ def megachonker(in_file, out_file, chunk_size=10**6, quiet=False):
                         if not quiet:
                             progress_bar.update(len(chunk))
 
+    shutil.copystat(in_file, out_file)
     os.rename(new_hash_file, old_hash_file)
 
 if __name__ == '__main__':
