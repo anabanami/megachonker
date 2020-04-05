@@ -5,65 +5,72 @@ import hashlib
 from tqdm import tqdm
 
 def megachonker(in_file, out_file, chunk_size=10**6, quiet=False):
-    """open file, read contents in binary, NOMINALLY: chunk it up into 1MB chunks"""
+    """
+    compares mtime of in_file and out_file, then open file, read contents 
+    in binary, NOMINALLY: chunk it up into 1MB chunks
+    """
+    mtime_in = os.path.getmtime(in_file)
+    mtime_out = os.path.getmtime(out_file)
+    if mtime_in != mtime_out:
 
-    old_hash_file = out_file + ".hashes"
-    new_hash_file = out_file + ".hashes.temp"
-    # check if exists else create out_file and old_hashes
-    if not os.path.exists(old_hash_file):
-        with open(old_hash_file, 'wb') as f:
+        old_hash_file = out_file + ".hashes"
+        new_hash_file = out_file + ".hashes.temp"
+        # check if exists else create out_file and old_hashes
+        if not os.path.exists(old_hash_file):
+            with open(old_hash_file, 'wb') as f:
+                pass
+        if not os.path.exists(out_file):
+            with open(out_file, 'wb') as f:
+                pass
+
+        if not quiet:
+            progress_bar = tqdm(
+                total=os.path.getsize(in_file),
+                smoothing=0,
+                unit='B',
+                unit_scale=True,
+                dynamic_ncols=True
+            )
+        
+        # opening all them files
+        with open(in_file, 'rb') as f_in:
+            with open(out_file, 'r+b') as f_out:
+                with open(old_hash_file, 'r+b') as g_old:
+                    with open(new_hash_file, 'wb') as g_new:
+                        while True:
+                            digest_old = g_old.read(32)
+
+                            chunk_start = f_in.tell()
+                            # current chunk size is: 1 MB
+                            chunk = f_in.read(chunk_size)
+                            # if no more in_file
+                            if not chunk:
+                                # ensure files are of the same size
+                                f_in_end = f_in.tell()    
+                                f_out.truncate(f_in_end)
+                                break
+
+                            # creating a hash for chunk
+                            digest = hashlib.sha256(chunk).digest()
+                            # writing into new has file
+                            g_new.write(digest)
+
+                            if digest != digest_old:
+                                f_out.seek(chunk_start)
+                                f_out.write(chunk)
+                            if not quiet:
+                                progress_bar.update(len(chunk))
+        else:
             pass
-    if not os.path.exists(out_file):
-        with open(out_file, 'wb') as f:
-            pass
-
-    if not quiet:
-        progress_bar = tqdm(
-            total=os.path.getsize(in_file),
-            smoothing=0,
-            unit='B',
-            unit_scale=True,
-            dynamic_ncols=True
-        )
-    
-    # opening all them files
-    with open(in_file, 'rb') as f_in:
-        with open(out_file, 'r+b') as f_out:
-            with open(old_hash_file, 'r+b') as g_old:
-                with open(new_hash_file, 'wb') as g_new:
-                    while True:
-                        digest_old = g_old.read(32)
-
-                        chunk_start = f_in.tell()
-                        # current chunk size is: 1 MB
-                        chunk = f_in.read(chunk_size)
-                        # if no more in_file
-                        if not chunk:
-                            # ensure files are of the same size
-                            f_in_end = f_in.tell()    
-                            f_out.truncate(f_in_end)
-                            break
-
-                        # creating a hash for chunk
-                        digest = hashlib.sha256(chunk).digest()
-                        # writing into new has file
-                        g_new.write(digest)
-
-                        if digest != digest_old:
-                            f_out.seek(chunk_start)
-                            f_out.write(chunk)
-                        if not quiet:
-                            progress_bar.update(len(chunk))
-
     shutil.copystat(in_file, out_file)
     os.rename(new_hash_file, old_hash_file)
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="""
-        Use megachonker for optimizing the backup of large files. megachonker dissects
-        large file objects into 1MB chunks and it hashes each chunk. Each hash
-        is then compared to a hash for the respective chunk in the previous
+        Use megachonker for optimizing the backup of large files. megachonker dissects 
+        newly modified large file objects into 1MB chunks and it hashes each chunk. 
+        Each hash is then compared to a hash for the respective chunk in the previous
         version of the file.  The chunk gets copied into the old file and
         backed up iff hashes differ. A file <out_file>.hashes will be stored
         alongside the backed up file.""")
