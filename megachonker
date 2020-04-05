@@ -2,6 +2,7 @@
 import argparse
 import os
 import hashlib
+import shutil
 from tqdm import tqdm
 
 def megachonker(in_file, out_file, chunk_size=10**6, quiet=False):
